@@ -74,3 +74,8 @@ waveletNoiseTile.bin
 CMakeSettings.json
 CMakePresets.json
 CMakeUserPresets.json
+lib/macos_x64
+lib/windows_arm64
+lib/windows_x64
+release/datafiles/assets
+tests/data
