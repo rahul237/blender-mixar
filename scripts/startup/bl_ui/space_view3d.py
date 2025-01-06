@@ -1163,9 +1163,7 @@ class VIEW3D_MT_editor_menus(Menu):
         }:
             layout.menu("VIEW3D_MT_select_" + mode_string.lower())
 
-        if mode_string == 'OBJECT':
-            layout.menu("VIEW3D_MT_add")
-        elif mode_string == 'EDIT_MESH':
+        if mode_string == 'EDIT_MESH':
             layout.menu("VIEW3D_MT_mesh_add", text="Add", text_ctxt=i18n_contexts.operator_default)
         elif mode_string == 'EDIT_CURVE':
             layout.menu("VIEW3D_MT_curve_add", text="Add", text_ctxt=i18n_contexts.operator_default)
@@ -2604,89 +2602,89 @@ class VIEW3D_MT_empty_add(Menu):
         layout.operator_enum("object.empty_add", "type")
 
 
-class VIEW3D_MT_add(Menu):
-    bl_label = "Add"
-    bl_translation_context = i18n_contexts.operator_default
-    bl_options = {'SEARCH_ON_KEY_PRESS'}
+# class VIEW3D_MT_add(Menu):
+#     bl_label = "Add"
+#     bl_translation_context = i18n_contexts.operator_default
+#     bl_options = {'SEARCH_ON_KEY_PRESS'}
 
-    def draw(self, context):
-        layout = self.layout
+#     def draw(self, context):
+#         layout = self.layout
 
-        if layout.operator_context == 'EXEC_REGION_WIN':
-            layout.operator_context = 'INVOKE_REGION_WIN'
-            layout.operator("WM_OT_search_single_menu", text="Search...", icon='VIEWZOOM').menu_idname = "VIEW3D_MT_add"
-            layout.separator()
+#         if layout.operator_context == 'EXEC_REGION_WIN':
+#             layout.operator_context = 'INVOKE_REGION_WIN'
+#             layout.operator("WM_OT_search_single_menu", text="Search...", icon='VIEWZOOM').menu_idname = "VIEW3D_MT_add"
+#             layout.separator()
 
-        # NOTE: was `EXEC_AREA`, but this context does not have the `rv3d`, which prevents
-        #       "align_view" to work on first call (see #32719).
-        layout.operator_context = 'EXEC_REGION_WIN'
+#         # NOTE: was `EXEC_AREA`, but this context does not have the `rv3d`, which prevents
+#         #       "align_view" to work on first call (see #32719).
+#         layout.operator_context = 'EXEC_REGION_WIN'
 
-        # Removed the Mesh and Curve add menus:
-        # layout.menu("VIEW3D_MT_mesh_add", icon='OUTLINER_OB_MESH')
-        # layout.menu("VIEW3D_MT_curve_add", icon='OUTLINER_OB_CURVE')
+#         # Removed the Mesh and Curve add menus:
+#         layout.menu("VIEW3D_MT_mesh_add", icon='OUTLINER_OB_MESH')
+#         layout.menu("VIEW3D_MT_curve_add", icon='OUTLINER_OB_CURVE')
 
-        layout.menu("VIEW3D_MT_surface_add", icon='OUTLINER_OB_SURFACE')
-        layout.menu("VIEW3D_MT_metaball_add", text="Metaball", icon='OUTLINER_OB_META')
-        layout.operator("object.text_add", text="Text", icon='OUTLINER_OB_FONT')
-        if context.preferences.experimental.use_new_point_cloud_type:
-            layout.operator("object.pointcloud_add", text="Point Cloud", icon='OUTLINER_OB_POINTCLOUD')
-        layout.menu("VIEW3D_MT_volume_add", text="Volume", text_ctxt=i18n_contexts.id_id, icon='OUTLINER_OB_VOLUME')
-        layout.menu("VIEW3D_MT_grease_pencil_add", text="Grease Pencil", icon='OUTLINER_OB_GREASEPENCIL')
+#         layout.menu("VIEW3D_MT_surface_add", icon='OUTLINER_OB_SURFACE')
+#         layout.menu("VIEW3D_MT_metaball_add", text="Metaball", icon='OUTLINER_OB_META')
+#         layout.operator("object.text_add", text="Text", icon='OUTLINER_OB_FONT')
+#         if context.preferences.experimental.use_new_point_cloud_type:
+#             layout.operator("object.pointcloud_add", text="Point Cloud", icon='OUTLINER_OB_POINTCLOUD')
+#         layout.menu("VIEW3D_MT_volume_add", text="Volume", text_ctxt=i18n_contexts.id_id, icon='OUTLINER_OB_VOLUME')
+#         layout.menu("VIEW3D_MT_grease_pencil_add", text="Grease Pencil", icon='OUTLINER_OB_GREASEPENCIL')
 
-        layout.separator()
+#         layout.separator()
 
-        if VIEW3D_MT_armature_add.is_extended():
-            layout.menu("VIEW3D_MT_armature_add", icon='OUTLINER_OB_ARMATURE')
-        else:
-            layout.operator("object.armature_add", text="Armature", icon='OUTLINER_OB_ARMATURE')
+#         if VIEW3D_MT_armature_add.is_extended():
+#             layout.menu("VIEW3D_MT_armature_add", icon='OUTLINER_OB_ARMATURE')
+#         else:
+#             layout.operator("object.armature_add", text="Armature", icon='OUTLINER_OB_ARMATURE')
 
-        layout.operator("object.add", text="Lattice", icon='OUTLINER_OB_LATTICE').type = 'LATTICE'
+#         layout.operator("object.add", text="Lattice", icon='OUTLINER_OB_LATTICE').type = 'LATTICE'
 
-        layout.separator()
+#         layout.separator()
 
-        layout.menu("VIEW3D_MT_empty_add", icon='OUTLINER_OB_EMPTY')
-        layout.menu("VIEW3D_MT_image_add", text="Image", icon='OUTLINER_OB_IMAGE')
+#         layout.menu("VIEW3D_MT_empty_add", icon='OUTLINER_OB_EMPTY')
+#         layout.menu("VIEW3D_MT_image_add", text="Image", icon='OUTLINER_OB_IMAGE')
 
-        layout.separator()
+#         layout.separator()
 
-        layout.menu("VIEW3D_MT_light_add", icon='OUTLINER_OB_LIGHT')
-        layout.menu("VIEW3D_MT_lightprobe_add", icon='OUTLINER_OB_LIGHTPROBE')
+#         layout.menu("VIEW3D_MT_light_add", icon='OUTLINER_OB_LIGHT')
+#         layout.menu("VIEW3D_MT_lightprobe_add", icon='OUTLINER_OB_LIGHTPROBE')
 
-        layout.separator()
+#         layout.separator()
 
-        if VIEW3D_MT_camera_add.is_extended():
-            layout.menu("VIEW3D_MT_camera_add", icon='OUTLINER_OB_CAMERA')
-        else:
-            VIEW3D_MT_camera_add.draw(self, context)
+#         if VIEW3D_MT_camera_add.is_extended():
+#             layout.menu("VIEW3D_MT_camera_add", icon='OUTLINER_OB_CAMERA')
+#         else:
+#             VIEW3D_MT_camera_add.draw(self, context)
 
-        layout.separator()
+#         layout.separator()
 
-        layout.operator("object.speaker_add", text="Speaker", icon='OUTLINER_OB_SPEAKER')
+#         layout.operator("object.speaker_add", text="Speaker", icon='OUTLINER_OB_SPEAKER')
 
-        layout.separator()
+#         layout.separator()
 
-        layout.operator_menu_enum("object.effector_add", "type", text="Force Field", icon='OUTLINER_OB_FORCE_FIELD')
+#         layout.operator_menu_enum("object.effector_add", "type", text="Force Field", icon='OUTLINER_OB_FORCE_FIELD')
 
-        layout.separator()
+#         layout.separator()
 
-        has_collections = bool(bpy.data.collections)
-        col = layout.column()
-        col.enabled = has_collections
+#         has_collections = bool(bpy.data.collections)
+#         col = layout.column()
+#         col.enabled = has_collections
 
-        if not has_collections or len(bpy.data.collections) > 10:
-            col.operator_context = 'INVOKE_REGION_WIN'
-            col.operator(
-                "object.collection_instance_add",
-                text="Collection Instance..." if has_collections else "No Collections to Instance",
-                icon='OUTLINER_OB_GROUP_INSTANCE',
-            )
-        else:
-            col.operator_menu_enum(
-                "object.collection_instance_add",
-                "collection",
-                text="Collection Instance",
-                icon='OUTLINER_OB_GROUP_INSTANCE',
-            )
+#         if not has_collections or len(bpy.data.collections) > 10:
+#             col.operator_context = 'INVOKE_REGION_WIN'
+#             col.operator(
+#                 "object.collection_instance_add",
+#                 text="Collection Instance..." if has_collections else "No Collections to Instance",
+#                 icon='OUTLINER_OB_GROUP_INSTANCE',
+#             )
+#         else:
+#             col.operator_menu_enum(
+#                 "object.collection_instance_add",
+#                 "collection",
+#                 text="Collection Instance",
+#                 icon='OUTLINER_OB_GROUP_INSTANCE',
+#             )
 
 
 class VIEW3D_MT_image_add(Menu):
@@ -8886,7 +8884,6 @@ classes = (
     VIEW3D_MT_volume_add,
     VIEW3D_MT_grease_pencil_add,
     VIEW3D_MT_empty_add,
-    VIEW3D_MT_add,
     VIEW3D_MT_image_add,
     VIEW3D_MT_object,
     VIEW3D_MT_object_animation,
