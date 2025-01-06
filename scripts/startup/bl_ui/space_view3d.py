@@ -2617,18 +2617,14 @@ class VIEW3D_MT_add(Menu):
             layout.operator("WM_OT_search_single_menu", text="Search...", icon='VIEWZOOM').menu_idname = "VIEW3D_MT_add"
             layout.separator()
 
-        # NOTE: don't use 'EXEC_SCREEN' or operators won't get the `v3d` context.
-
         # NOTE: was `EXEC_AREA`, but this context does not have the `rv3d`, which prevents
         #       "align_view" to work on first call (see #32719).
         layout.operator_context = 'EXEC_REGION_WIN'
 
-        # layout.operator_menu_enum("object.mesh_add", "type", text="Mesh", icon='OUTLINER_OB_MESH')
-        layout.menu("VIEW3D_MT_mesh_add", icon='OUTLINER_OB_MESH')
+        # Removed the Mesh and Curve add menus:
+        # layout.menu("VIEW3D_MT_mesh_add", icon='OUTLINER_OB_MESH')
+        # layout.menu("VIEW3D_MT_curve_add", icon='OUTLINER_OB_CURVE')
 
-        # layout.operator_menu_enum("object.curve_add", "type", text="Curve", icon='OUTLINER_OB_CURVE')
-        layout.menu("VIEW3D_MT_curve_add", icon='OUTLINER_OB_CURVE')
-        # layout.operator_menu_enum("object.surface_add", "type", text="Surface", icon='OUTLINER_OB_SURFACE')
         layout.menu("VIEW3D_MT_surface_add", icon='OUTLINER_OB_SURFACE')
         layout.menu("VIEW3D_MT_metaball_add", text="Metaball", icon='OUTLINER_OB_META')
         layout.operator("object.text_add", text="Text", icon='OUTLINER_OB_FONT')
